@@ -1,0 +1,53 @@
+general {
+  interval = 3
+  colors   = true
+
+  color_good     = '#859900'
+  color_degraded = '#b58900'
+  color_bad      = '#dc322f'
+}
+
+order += "volume master"
+order += "wireless _first_"
+order += "ethernet _first_"
+order += "memory"
+order += "disk /"
+order += "battery all"
+order += "tztime local"
+
+volume master {
+  format = "Vol: %volume"
+  format_muted = "Vol: mute"
+  device = "default"
+  mixer = "Master"
+  mixer_idx = 0
+}
+
+wireless _first_ {
+  format_up = "W: %quality"
+  format_down = "W: down"
+}
+
+ethernet _first_ {
+  format_up = "E: %speed"
+  format_down = "E: down"
+}
+
+battery all {
+  format = "%status %percentage %remaining"
+  low_threshold = 5
+}
+
+disk "/" {
+  format = "DISK: %used / %free"
+  low_threshold = "10"
+}
+
+memory {
+  format = "RAM: %used / %available"
+}
+
+tztime local {
+  format = "%Y-%m-%d %H:%M"
+}
+

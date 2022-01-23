@@ -6,7 +6,7 @@ Plug 'cdelledonne/vim-cmake'
 Plug 'voldikss/vim-floaterm'
 
 Plug 'mhinz/vim-startify'
-Plug 'altercation/vim-colors-solarized'
+Plug 'shaunsingh/solarized.nvim'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'ryanoasis/vim-devicons'

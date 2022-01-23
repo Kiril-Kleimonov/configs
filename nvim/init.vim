@@ -18,9 +18,10 @@ set incsearch
 set list
 set listchars=trail:•
 set noswapfile
-set encoding=UTF-8
+set encoding=utf-8
 set scrolloff=5
 set noshowmode
+set t_Co=256
 
 filetype plugin indent on
 syntax enable
@@ -28,4 +29,5 @@ syntax enable
 set background=light
 colorscheme solarized
 let g:airline_theme='solarized'
+
 

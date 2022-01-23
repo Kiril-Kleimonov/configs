@@ -1,0 +1,187 @@
+#                                                                             #
+#                                     EXEC                                    #
+#                                                                             #
+
+exec_always --no-startup-id feh --bg-scale ~/Pictures/Environment/22345323-1.png
+exec_always --no-startup-id picom
+exec --no-startup-id setxkbmap -model pc105 -layout 'us,ru,ua' -option 'grp:caps_toggle'
+exec --no-startup-id nm-applet
+exec --no-startup-id dex --autostart --environment i3
+exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock --nofork
+exec --no-startup-id greenclip daemon>/dev/null
+
+#                                                                             #
+#                                  PROPERTIES                                 #
+#                                                                             #
+
+# border
+for_window [class="^.*"] border pixel 0
+gaps inner 5
+gaps outer 2
+hide_edge_borders vertical
+
+floating_minimum_size 400 x 350
+floating_maximum_size 1800 x 900
+
+# colors                tab border  tab bg   text     stupid line  border
+client.focused          #2aa198     #2aa198  #fdf6e3  #2aa198      #2aa198
+client.unfocused        #586e75     #586e75  #fdf6e3  #586e75      #586e75
+client.focused_inactive #073642     #000000  #fdf6e3  #073642      #073642
+client.urgent           #dc322f     #dc322f  #fdf6e3  #dc322f      #dc322f
+# unstable colors
+client.placeholder #00ff00 #0000ff #ffff00 #00ffff #ff00ff
+client.background #ff00ff
+
+# fonts
+font pango:JetBrains ExtraBold 7.5
+
+focus_follows_mouse no
+
+#                                                                             #
+#                                 STATUS BAR                                  #
+#                                                                             #
+
+bar {
+  status_command i3status
+  position top
+
+  colors {
+    statusline #fdf6e3
+    separator  #eee8d5
+    background #063742
+
+    #                  BORDER   BG       TEXT
+    focused_workspace  #eee8d5  #00756c  #fdf6e3
+    active_workspace   #eee8d5  #000000  #fdf6e3
+    inactive_workspace #586e75  #000000  #586e75
+    urgent_workspace   #586e75  #dc322f  #fdf6e3
+    binding_mode       #586e75  #dc322f  #fdf6e3
+  }
+}
+
+#                                                                             #
+#                                   HOTKEYS                                   #
+#                                                                             #
+
+# mod key
+set $mod Mod4
+
+# launch application
+bindsym $mod+Shift+q kill
+bindsym $mod+Return exec kitty
+bindsym $mod+d exec "rofi -modi drun,run -show drun"
+bindsym $mod+c exec --no-startup-id rofi -modi "clipboard:greenclip print" -show clipboard
+bindsym Print exec flameshot full
+bindsym $mod+Print exec flameshot gui
+
+
+# i3 session
+bindsym $mod+Shift+c reload
+bindsym $mod+Shift+r restart
+bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -B 'Yes, exit i3' 'i3-msg exit'"
+
+#                                                                             #
+#                             AUDIO AND BRIGHTNESS                            #
+#                                                                             #
+
+# audio
+set $refresh_i3status killall -SIGUSR1 i3status
+bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +10% && $refresh_i3status
+bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -10% && $refresh_i3status
+bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle && $refresh_i3status
+bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute @DEFAULT_SOURCE@ toggle && $refresh_i3status
+
+# brightness (DOES'T WORK)
+bindsym XF86MonBrightnessUp exec sudo light -A 10
+bindsym XF86MonBrightnessDown exec sudo light -U 10
+
+#                                                                             #
+#                                   WINDOWS                                   #
+#                                                                             #
+
+# toggle tiling / floating
+bindsym $mod+Shift+space floating toggle
+
+# change focus between tiling / floating windows
+bindsym $mod+space focus mode_toggle
+
+# use Mouse+$mod to drag floating windows to their wanted position
+floating_modifier $mod
+
+# change container layout (stacked, tabbed, toggle split)
+bindsym $mod+s layout stacking
+bindsym $mod+w layout tabbed
+bindsym $mod+e layout toggle split
+
+# change tiling mode
+bindsym $mod+b split h
+bindsym $mod+v split v
+
+# switch focus
+bindsym $mod+h focus left
+bindsym $mod+j focus down
+bindsym $mod+k focus up
+bindsym $mod+l focus right
+
+# move focused window
+bindsym $mod+Shift+h move left
+bindsym $mod+Shift+j move down
+bindsym $mod+Shift+k move up
+bindsym $mod+Shift+l move right
+
+# enter fullscreen mode for the focused container
+bindsym $mod+f fullscreen toggle
+
+# window resize
+bindsym $mod+r mode "resize"
+mode "resize" {
+        bindsym h resize shrink width 1 px or 1 ppt
+        bindsym j resize grow height 1 px or 1 ppt
+        bindsym k resize shrink height 1 px or 1 ppt
+        bindsym l resize grow width 1 px or 1 ppt
+
+        bindsym Return mode "default"
+        bindsym Escape mode "default"
+        bindsym $mod+r mode "default"
+}
+
+#                                                                             #
+#                                  WORKSPACES                                 #
+#                                                                             #
+
+# workspace names
+set $ws1 "1"
+set $ws2 "2"
+set $ws3 "3"
+set $ws4 "4"
+set $ws5 "5"
+set $ws6 "6"
+set $ws7 "7"
+set $ws8 "8"
+set $ws9 "9"
+set $ws10 "10"
+
+# switch to workspace
+bindsym $mod+1 workspace number $ws1
+bindsym $mod+2 workspace number $ws2
+bindsym $mod+3 workspace number $ws3
+bindsym $mod+4 workspace number $ws4
+bindsym $mod+5 workspace number $ws5
+bindsym $mod+6 workspace number $ws6
+bindsym $mod+7 workspace number $ws7
+bindsym $mod+8 workspace number $ws8
+bindsym $mod+9 workspace number $ws9
+bindsym $mod+0 workspace number $ws10
+
+# move focused container to workspace
+bindsym $mod+Shift+1 move container to workspace number $ws1
+bindsym $mod+Shift+2 move container to workspace number $ws2
+bindsym $mod+Shift+3 move container to workspace number $ws3
+bindsym $mod+Shift+4 move container to workspace number $ws4
+bindsym $mod+Shift+5 move container to workspace number $ws5
+bindsym $mod+Shift+6 move container to workspace number $ws6
+bindsym $mod+Shift+7 move container to workspace number $ws7
+bindsym $mod+Shift+8 move container to workspace number $ws8
+bindsym $mod+Shift+9 move container to workspace number $ws9
+bindsym $mod+Shift+0 move container to workspace number $ws10
+
